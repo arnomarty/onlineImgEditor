@@ -25,7 +25,7 @@ npm run serve
   * Images aux formats JPEG et TIFF
   * Erreur si le dossier `images` n'est pas présent
 
-* [ ] Gérer les images présentes sur le serveur
+* [x] Gérer les images présentes sur le serveur
   * Le serveur peut accéder/supprimer une image via son identifiant
   * Le serveur peut ajouter une image, et construire la liste des images disponibles ({id, nom, taille, format})
   
