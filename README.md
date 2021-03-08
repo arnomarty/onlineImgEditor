@@ -3,6 +3,18 @@
 ## Résumé
 
 > L'objectif est de mettre en place une application client-serveur d'édition d'images basique. Ce fichier README servira à suivre l'avancement du développement en fonction des spécifications demandées dans le cahier des charges.
+#### Commandes d'éxécution:
+* Lancement backend:
+```sh
+mvn clean install
+mvn --projects backend spring-boot:run
+```
+* Lancement environnement de développement frontend:
+```sh
+cd frontend/
+npm run serve
+```
+
 
 ------------------------------
 
