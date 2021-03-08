@@ -35,17 +35,17 @@ npm run serve
 
 ## Communication client/serveur
 
-* [ ] Transférer la liste des images existantes
+* [x] Transférer la liste des images existantes
   * `GET /images` retourne la liste des images sur le serveur au format JSON: `[ {id, name, type, size} ]
 
-* [ ] Ajout d'image
+* [x] Ajout d'image
   * `POST /images` ajoute l'image spécifiée au serveur
 
-* [ ] Récupération d'image
+* [x] Récupération d'image
   * `GET images/id` renvoie l'image dont l'ID a été passé en paramètres 
   * Image retournée dans le corps de la réponse
 
-* [ ] Suppression d'image
+* [x] Suppression d'image
   * `DELETE /images/id` efface l'image stockée sous l'identifiant `id`
 
 * [ ] Éxécution d'algorithmes
