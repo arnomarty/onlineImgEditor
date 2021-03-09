@@ -12,10 +12,10 @@
     </select>
     <span>Selected: {{ selected }}</span>
   </div>
-  // The issue probably lies down here:
-  <p>
-    <img v-bind:src="imageUrl">
-  </p>
+  <div class="container">
+    {{ imageUrl }}
+    <img class="incontainer" v-bind:src="imageUrl">
+  </div>
 </template>
 
 <script>
@@ -33,7 +33,15 @@ export default {
       imageUrl: 'images/0'
     }
   },
+  watch: {
+    selected: function () {
+      console.log('SELECTED!')
+      this.getSpecificPicture()
+      this.imageUrl = 'images/' + this.selected
+    }
+  },
   methods: {
+
     // Useless until the POST method is implemented
     callRestService () {
       axios
@@ -46,7 +54,6 @@ export default {
           this.errors.push(e)
         })
     },
-    // Downloads the image client-side, but it doesn't show on the HTML
     getSpecificPicture () {
       var link = 'images/' + this.selected
       axios.get(link, { responseType: 'blob' })
@@ -55,7 +62,8 @@ export default {
           reader.readAsDataURL(response.data)
           reader.onload = function () {
             this.imageUrl = reader.result
-            // this.imageUrl = link
+            this.imageUrl = link
+            console.log(this.imageUrl)
           }
         })
     }
@@ -89,5 +97,16 @@ li {
 }
 a {
   color: #42b983;
+}
+.container{
+  width: 300px;
+  height: 300px;
+}
+
+.incontainer{
+    width: 300px;
+    height: 300px;
+    object-fit: scale-down;
+    border: 1px solid #aaa;
 }
 </style>
