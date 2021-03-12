@@ -57,7 +57,7 @@ npm run serve
 
 ## Côté client
 
-* [ ] Parcourir les images disponibles sur le serveur
+* [X] Parcourir les images disponibles sur le serveur
   * Sous forme de carousel ou de gallerie d'image
 
 * [ ] Sélectionner une image, et y appliquer un effet

@@ -16,6 +16,12 @@
     {{ imageUrl }}
     <img class="incontainer" v-bind:src="imageUrl">
   </div>
+
+  <ul class="container">
+    <li v-for="img in response" :key=img.id>
+      <a @click="setSelected(img.id)"><img class="incontainer" :src="'images/'+img.id"></a>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -41,7 +47,9 @@ export default {
     }
   },
   methods: {
-
+    setSelected (id) {
+      this.selected = id
+    },
     // Useless until the POST method is implemented
     callRestService () {
       axios
