@@ -70,7 +70,7 @@ npm run serve
 * [X] Uploader une image
   * L'utilisateur peut uploader une image sur le serveur (non-persistant)
 
-* [ ] Supprimer une image 
+* [X] Supprimer une image 
 
 ---------------
 

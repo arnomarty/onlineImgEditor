@@ -5,8 +5,14 @@
     <h3>{{ response }}</h3>
   </div>
 
-  <div class="container">
-    <div class="large-12 medium-12 small-12 cell">
+  <div class="uploader">
+    <div class="downloader">
+      <button @click="downloadPicture()">Download</button>
+    </div>
+    <div class="downloader">
+      <button @click="deletePicture()">Delete</button>
+    </div>
+    <div>
       <label>File
         <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
       </label>
@@ -61,6 +67,30 @@ export default {
     }
   },
   methods: {
+    downloadPicture () {
+      axios({
+        url: this.imageUrl,
+        method: 'GET',
+        responseType: 'blob'
+      }).then((response) => {
+        var fileUrl = window.URL.createObjectURL(new Blob([response.data]))
+        var fileLink = document.createElement('a')
+        fileLink.href = fileUrl
+        fileLink.setAttribute('download', 'file.jpg')
+        document.body.appendChild(fileLink)
+        fileLink.click()
+      })
+    },
+    deletePicture () {
+      axios
+        .delete(this.imageUrl)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
     },
@@ -76,7 +106,6 @@ export default {
         }
       ).then(function () {
         console.log('Success!')
-        this.callRestService()
       })
         .catch(function () {
           console.log('Failure!')
@@ -137,6 +166,7 @@ h3 {
 
 .column {
   float: left;
+  margin-top: 10px;
   padding: 10px;
 }
 
@@ -149,6 +179,19 @@ h3 {
 
 .column.middle {
   width: 70%;
+  border: 1px solid blue;
+}
+
+.uploader {
+    background: cyan;
+    float: left;
+    display: inline-flex;
+    border: 1px solid green;
+}
+
+.downloader {
+  background: red;
+  padding-right: 5px;
 }
 
 .imgs {
