@@ -13,6 +13,9 @@
       <button @click="deletePicture()">Delete</button>
     </div>
     <div>
+      <button v-on:click="toggleUploadButton()">Upload</button>
+    </div>
+    <div  v-if="toggleUpload == true">
       <label>File
         <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
       </label>
@@ -56,7 +59,8 @@ export default {
       errors: [],
       selected: '0',
       imageUrl: 'images/0',
-      file: ''
+      file: '',
+      toggleUpload: false
     }
   },
   watch: {
@@ -90,6 +94,9 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    toggleUploadButton () {
+      this.toggleUpload = !this.toggleUpload
     },
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
