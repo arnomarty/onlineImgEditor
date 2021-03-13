@@ -1,9 +1,19 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <button class="Search__button" @click="getSpecificPicture()">Call Spring Boot REST backend</button>
+    <button class="Search__button" @click="callRestService()">Call Spring Boot REST backend</button>
     <h3>{{ response }}</h3>
   </div>
+
+  <div class="container">
+    <div class="large-12 medium-12 small-12 cell">
+      <label>File
+        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+      </label>
+      <button v-on:click="submitFile()">Submit</button>
+    </div>
+  </div>
+
   <div id="v-model-select-dynamic" class="demo">
     <select v-model="selected">
       <option v-for="img in response" :key="img.id" :value="img.id">
@@ -12,16 +22,19 @@
     </select>
     <span>Selected: {{ selected }}</span>
   </div>
-  <div class="container">
-    {{ imageUrl }}
-    <img class="incontainer" v-bind:src="imageUrl">
+
+  <div class="column side">
+    <ul>
+      <li v-for="img in response" :key=img.id>
+        <a @click="setSelected(img.id)"><img class="imgs" :src="'images/'+img.id"></a>
+      </li>
+    </ul>
   </div>
 
-  <ul class="container">
-    <li v-for="img in response" :key=img.id>
-      <a @click="setSelected(img.id)"><img class="incontainer" :src="'images/'+img.id"></a>
-    </li>
-  </ul>
+  <div class="column middle">
+    {{ imageUrl }}
+    <img class="imgs" v-bind:src="imageUrl">
+  </div>
 </template>
 
 <script>
@@ -36,7 +49,8 @@ export default {
       response: [],
       errors: [],
       selected: '0',
-      imageUrl: 'images/0'
+      imageUrl: 'images/0',
+      file: ''
     }
   },
   watch: {
@@ -47,6 +61,27 @@ export default {
     }
   },
   methods: {
+    handleFileUpload () {
+      this.file = this.$refs.file.files[0]
+    },
+    submitFile () {
+      const formData = new FormData()
+      formData.append('file', this.file)
+      axios.post('/images',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      ).then(function () {
+        console.log('Success!')
+        this.callRestService()
+      })
+        .catch(function () {
+          console.log('Failure!')
+        })
+    },
     setSelected (id) {
       this.selected = id
     },
@@ -92,29 +127,40 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+html{
+  height: 100%;
+}
+
 h3 {
   margin: 40px 0 0;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.container{
-  width: 300px;
-  height: 300px;
+
+.column {
+  float: left;
+  padding: 10px;
 }
 
-.incontainer{
-    width: 300px;
-    height: 300px;
-    object-fit: scale-down;
-    border: 1px solid #aaa;
+.column.side {
+  width: 20%;
+    height: 90vh;
+  border: 1px solid red;
+  overflow: scroll;
 }
+
+.column.middle {
+  width: 70%;
+}
+
+.imgs {
+  max-width: 100%;
+  object-fit: scale-down;
+  border: 1px solid black;
+}
+
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+
 </style>

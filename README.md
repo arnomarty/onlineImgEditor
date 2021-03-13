@@ -67,7 +67,7 @@ npm run serve
 * [ ] Enregistrer une image
   * L'utilisateur peut enregistrer une image, avec ou sans effet
 
-* [ ] Uploader une image
+* [X] Uploader une image
   * L'utilisateur peut uploader une image sur le serveur (non-persistant)
 
 * [ ] Supprimer une image 
