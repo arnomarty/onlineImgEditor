@@ -99,10 +99,6 @@ html{
   height: 100%;
 }
 
-h3 {
-  margin: 40px 0 0;
-}
-
 .column {
   float: left;
   margin-top: 10px;
@@ -119,18 +115,6 @@ h3 {
 .column.middle {
   width: 70%;
   border: 1px solid blue;
-}
-
-.uploader {
-    background: cyan;
-    float: left;
-    display: inline-flex;
-    border: 1px solid green;
-}
-
-.downloader {
-  background: red;
-  padding-right: 5px;
 }
 
 .imgs {

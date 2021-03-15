@@ -55,7 +55,7 @@ npm run serve
 
 ---------------
 
-## Côté client
+## Côté client (frontend)
 
 * [X] Parcourir les images disponibles sur le serveur
   * Sous forme de carousel ou de gallerie d'image
