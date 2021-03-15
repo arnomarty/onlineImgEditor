@@ -1,26 +1,7 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <button class="Search__button" @click="callRestService()">Call Spring Boot REST backend</button>
     <h3>{{ response }}</h3>
-  </div>
-
-  <div class="uploader">
-    <div class="downloader">
-      <button @click="downloadPicture()">Download</button>
-    </div>
-    <div class="downloader">
-      <button @click="deletePicture()">Delete</button>
-    </div>
-    <div>
-      <button v-on:click="toggleUploadButton()">Upload</button>
-    </div>
-    <div  v-if="toggleUpload == true">
-      <label>File
-        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-      </label>
-      <button v-on:click="submitFile()">Submit</button>
-    </div>
   </div>
 
   <div id="v-model-select-dynamic" class="demo">
@@ -49,7 +30,8 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'HelloWorld',
+  name: 'Gallery',
+  emits: ['updateUrl'],
   props: {
     msg: String
   },
@@ -58,9 +40,7 @@ export default {
       response: [],
       errors: [],
       selected: '0',
-      imageUrl: 'images/0',
-      file: '',
-      toggleUpload: false
+      imageUrl: 'images/0'
     }
   },
   watch: {
@@ -68,60 +48,14 @@ export default {
       console.log('SELECTED!')
       this.getSpecificPicture()
       this.imageUrl = 'images/' + this.selected
+      this.$emit('updateUrl', this.imageUrl)
     }
   },
   methods: {
-    downloadPicture () {
-      axios({
-        url: this.imageUrl,
-        method: 'GET',
-        responseType: 'blob'
-      }).then((response) => {
-        var fileUrl = window.URL.createObjectURL(new Blob([response.data]))
-        var fileLink = document.createElement('a')
-        fileLink.href = fileUrl
-        fileLink.setAttribute('download', 'file.jpg')
-        document.body.appendChild(fileLink)
-        fileLink.click()
-      })
-    },
-    deletePicture () {
-      axios
-        .delete(this.imageUrl)
-        .then(function (response) {
-          console.log(response)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    toggleUploadButton () {
-      this.toggleUpload = !this.toggleUpload
-    },
-    handleFileUpload () {
-      this.file = this.$refs.file.files[0]
-    },
-    submitFile () {
-      const formData = new FormData()
-      formData.append('file', this.file)
-      axios.post('/images',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-      ).then(function () {
-        console.log('Success!')
-      })
-        .catch(function () {
-          console.log('Failure!')
-        })
-    },
     setSelected (id) {
       this.selected = id
     },
-    // Useless until the POST method is implemented
+
     callRestService () {
       axios
         .get('images')

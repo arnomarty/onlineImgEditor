@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ImageIO :url="this.imageUrl"/>
+    <Gallery msg="Welcome to Your Vue.js App" @updateUrl="updateUrl($event)"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Gallery from '@/components/Gallery.vue'
+import ImageIO from '@/components/ImageIO.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    Gallery,
+    ImageIO
+  },
+  data () {
+    return {
+      imageUrl: 'images/0'
+    }
+  },
+  methods: {
+    updateUrl (url) {
+      this.imageUrl = url
+      console.log("'Passed:'+this.imageUrl")
+    }
   }
 }
 </script>
