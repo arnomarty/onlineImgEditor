@@ -1,9 +1,4 @@
 <template>
-  <div class="hello">
-    <button class="Search__button" @click="callRestService()">Call Spring Boot REST backend</button>
-    <h3>{{ response }}</h3>
-  </div>
-
   <div id="v-model-select-dynamic" class="demo">
     <select v-model="selected">
       <option v-for="img in response" :key="img.id" :value="img.id">
@@ -49,6 +44,9 @@ export default {
       this.getSpecificPicture()
       this.imageUrl = 'images/' + this.selected
       this.$emit('updateUrl', this.imageUrl)
+    },
+    response: function () {
+      this.callRestService()
     }
   },
   methods: {
