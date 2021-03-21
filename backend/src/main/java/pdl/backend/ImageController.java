@@ -82,6 +82,7 @@ public class ImageController {
     return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
   }
 
+
   @RequestMapping(value = "/images", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
   @ResponseBody
   public ArrayNode getImageList() {
@@ -96,9 +97,9 @@ public class ImageController {
     return nodes;
   }
 
-  @RequestMapping(value = "/algorithms", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+  @RequestMapping(value = "/images/algo", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
   @ResponseBody
-  public ArrayNode getAlgorithmList() {
+  public ArrayNode getAlgoList() {
     System.out.println("I'M IN!!!");
     ArrayNode nodes = mapper.createArrayNode();
     int i=1;
@@ -107,7 +108,7 @@ public class ImageController {
       ObjectNode entry = mapper.createObjectNode();
       entry.put("name", name);
       for( String parameter : imageDao.getAlgoList().get(name)){
-        entry.put("p"+i, parameter);
+        entry.put("param"+ i, parameter);
         i++;
       }
       nodes.add(entry);

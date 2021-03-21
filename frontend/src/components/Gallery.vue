@@ -1,5 +1,5 @@
 <template>
-  <div id="v-model-select-dynamic" class="demo">
+  <div id="v-model-select-dynamic">
     <select v-model="selected">
       <option v-for="img in response" :key="img.id" :value="img.id">
         {{ img.name }}
@@ -15,8 +15,8 @@
       </li>
     </ul>
   </div>
-
-  <div class="column middle">
+  <div class="column middle" v-if="selected=='-1'">Select a picture...</div>
+  <div class="column middle" v-else>
     {{ imageUrl }}
     <img class="imgs" v-bind:src="imageUrl">
   </div>
@@ -34,7 +34,7 @@ export default {
     return {
       response: [],
       errors: [],
-      selected: '0',
+      selected: '-1',
       imageUrl: 'images/0'
     }
   },
@@ -47,7 +47,7 @@ export default {
     msg: function () {
       this.callRestService()
       console.log('Received!')
-      this.selected = this.response[0].id
+      this.selected = '-1'
     }
   },
   methods: {

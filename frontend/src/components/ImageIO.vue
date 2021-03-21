@@ -9,7 +9,7 @@
     <div>
       <button v-on:click="toggleUploadButton()">Upload</button>
     </div>
-    <div  v-if="toggleUpload == true">
+    <div v-if="toggleUpload == true">
       <label>File
         <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
       </label>
