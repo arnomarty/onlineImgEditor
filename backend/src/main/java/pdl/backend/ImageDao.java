@@ -10,12 +10,11 @@ import java.util.stream.Stream;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
-
 @Repository
 public class ImageDao implements Dao<Image> {
 
   private final Map<Long, Image> images = new HashMap<>();
+  private final Map<String, ArrayList<String>> algoList = new HashMap<>();
 
   public ImageDao() {
     ClassPathResource imgFile;
@@ -31,6 +30,9 @@ public class ImageDao implements Dao<Image> {
     } catch (final IOException e) {
       e.printStackTrace();
     }
+
+    algoList.put("rgbtogrey", new ArrayList<>());
+    algoList.put("luminosity", new ArrayList<>(Arrays.asList("brightness")));
   }
 
   public Set<String> resourcesList(String dir, String subdir) throws IOException {
@@ -83,5 +85,7 @@ public class ImageDao implements Dao<Image> {
   public void delete(final Image img) {
     images.remove(img.getId());
   }
+
+  public Map<String, ArrayList<String>> getAlgoList(){ return this.algoList; }
 
 }

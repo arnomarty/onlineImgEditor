@@ -16,6 +16,12 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+  	<repositories>
+    		<repository>
+      			<id>scijava.public</id>
+      			<url>https://maven.scijava.org/content/groups/public</url>
+    		</repository>
+  	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -27,10 +33,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
+        	<dependency>
+            		<groupId>org.springframework</groupId>
+            		<artifactId>spring-test</artifactId>
+        	</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-test-autoconfigure</artifactId>
@@ -39,6 +45,21 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
+ 		<dependency>
+      			<groupId>net.imglib2</groupId>
+      			<artifactId>imglib2</artifactId>
+      			<version>5.9.2</version>
+    		</dependency>
+    		    <dependency>
+      			<groupId>io.scif</groupId>
+      			<artifactId>scifio</artifactId>
+    			<version>0.41.0</version>
+    		</dependency>
+    		<dependency>
+      			<groupId>net.imglib2</groupId>
+      			<artifactId>imglib2-algorithm</artifactId>
+      			<version>0.11.2</version>
+    		</dependency>			
 	</dependencies>
 
 	<build>

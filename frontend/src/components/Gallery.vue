@@ -46,7 +46,9 @@ export default {
       this.$emit('updateUrl', this.imageUrl)
     },
     response: function () {
+      console.log('oof')
       this.callRestService()
+
     }
   },
   methods: {

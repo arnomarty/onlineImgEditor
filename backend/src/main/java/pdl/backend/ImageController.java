@@ -29,7 +29,6 @@ public class ImageController {
 
   @Autowired
   private ObjectMapper mapper;
-
   private final ImageDao imageDao;
 
   @Autowired
@@ -38,11 +37,18 @@ public class ImageController {
   }
 
   @RequestMapping(value = "/images/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-  public ResponseEntity<?> getImage(@PathVariable("id") long id) {
+  public ResponseEntity<?> getImage(@PathVariable("id") long id, @RequestParam(required = false) String algorithm) {
 
     Optional<Image> opt = imageDao.retrieve(id);
 
     if(opt.isPresent()) {
+
+      if(algorithm != null){
+        Image i = new Image("edited.jpg", ImageLogic.handle(opt.get()));
+
+        opt.get().setData(i.getData());
+      }
+
       return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
               .body(new InputStreamResource( new ByteArrayInputStream(opt.get().getData()) ));
     }
@@ -85,6 +91,25 @@ public class ImageController {
       ObjectNode entry = mapper.createObjectNode();
       entry.put("id", img.getId());
       entry.put("name", img.getName());
+      nodes.add(entry);
+    }
+    return nodes;
+  }
+
+  @RequestMapping(value = "/algorithms", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+  @ResponseBody
+  public ArrayNode getAlgorithmList() {
+    System.out.println("I'M IN!!!");
+    ArrayNode nodes = mapper.createArrayNode();
+    int i=1;
+
+    for( String name : imageDao.getAlgoList().keySet()){
+      ObjectNode entry = mapper.createObjectNode();
+      entry.put("name", name);
+      for( String parameter : imageDao.getAlgoList().get(name)){
+        entry.put("p"+i, parameter);
+        i++;
+      }
       nodes.add(entry);
     }
     return nodes;
