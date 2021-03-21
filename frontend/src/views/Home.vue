@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <AlgorithmPanel />
-    <ImageIO :url="this.imageUrl"/>
-    <Gallery msg="Welcome to Your Vue.js App" @updateUrl="updateUrl($event)"/>
+    <ImageIO :url="this.imageUrl" @reload="updateImgList($event)"/>
+    <Gallery :msg="this.msg" @updateUrl="updateUrl($event)"/>
   </div>
 </template>
 
@@ -21,13 +21,18 @@ export default {
   },
   data () {
     return {
-      imageUrl: 'images/0'
+      imageUrl: 'images/0',
+      msg: false
     }
   },
   methods: {
     updateUrl (url) {
       this.imageUrl = url
       console.log("'Passed:'+this.imageUrl")
+    },
+    updateImgList (status) {
+      console.log('IN TRANSIT!')
+      this.msg = status
     }
   }
 }

@@ -22,23 +22,28 @@
 import axios from 'axios'
 export default {
   name: 'ImageIO',
+  emits: ['reload'],
   props: {
     url: String
   },
+
   data () {
     return {
       response: [],
       errors: [],
       file: '',
       imageUrl: 'images/0',
-      toggleUpload: false
+      toggleUpload: false,
+      reload: false
     }
   },
+
   watch: {
     url: function () {
       this.imageUrl = this.url
     }
   },
+
   methods: {
     downloadPicture () {
       console.log('Passed=')
@@ -56,6 +61,7 @@ export default {
         fileLink.click()
       })
     },
+
     deletePicture () {
       axios
         .delete(this.imageUrl)
@@ -65,13 +71,18 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+      this.reload = !this.reload
+      this.$emit('reload', this.reload)
     },
+
     toggleUploadButton () {
       this.toggleUpload = !this.toggleUpload
     },
+
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
     },
+
     submitFile () {
       const formData = new FormData()
       formData.append('file', this.file)
@@ -88,6 +99,8 @@ export default {
         .catch(function () {
           console.log('Failure!')
         })
+      this.reload = !this.reload
+      this.$emit('reload', this.reload)
     }
   }
 }

@@ -28,7 +28,7 @@ export default {
   name: 'Gallery',
   emits: ['updateUrl'],
   props: {
-    msg: String
+    msg: Boolean
   },
   data () {
     return {
@@ -40,15 +40,14 @@ export default {
   },
   watch: {
     selected: function () {
-      console.log('SELECTED!')
       this.getSpecificPicture()
       this.imageUrl = 'images/' + this.selected
       this.$emit('updateUrl', this.imageUrl)
     },
-    response: function () {
-      console.log('oof')
+    msg: function () {
       this.callRestService()
-
+      console.log('Received!')
+      this.selected = this.response[0].id
     }
   },
   methods: {
